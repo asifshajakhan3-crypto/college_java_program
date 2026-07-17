@@ -1,0 +1,49 @@
+import java.util.*;
+
+class ThroneInheritance {
+    private String king;
+    // Adjacency list: parentName -> list of children in birth order
+    private Map<String, List<String>> familyTree;
+    // Set to keep track of deceased family members
+    private Set<String> dead;
+
+    public ThroneInheritance(String kingName) {
+        this.king = kingName;
+        this.familyTree = new HashMap<>();
+        this.dead = new HashSet<>();
+        this.familyTree.put(kingName, new ArrayList<>());
+    }
+    
+    public void birth(String parentName, String childName) {
+        // Initialize the child's own branch
+        this.familyTree.put(childName, new ArrayList<>());
+        // Add the child to the parent's list of children
+        this.familyTree.get(parentName).add(childName);
+    }
+    
+    public void death(String name) {
+        this.dead.add(name);
+    }
+    
+    public List<String> getInheritanceOrder() {
+        List<String> order = new ArrayList<>();
+        dfs(this.king, order);
+        return order;
+    }
+
+    // Helper method to perform Pre-order DFS traversal
+    private void dfs(String currentPerson, List<String> order) {
+        // Only add to the succession line if they are alive
+        if (!this.dead.contains(currentPerson)) {
+            order.add(currentPerson);
+        }
+        
+        // Recurse through children in order of birth
+        List<String> children = this.familyTree.get(currentPerson);
+        if (children != null) {
+            for (String child : children) {
+                dfs(child, order);
+            }
+        }
+    }
+}
