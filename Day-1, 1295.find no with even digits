@@ -1,0 +1,14 @@
+class Solution {
+    public int findNumbers(int[] nums) {
+        int count = 0;
+        for (int num : nums) {
+            // 2 digits: 10 to 99
+            // 4 digits: 1000 to 9999
+            // 6 digits: 100000 (though upper bound constraint here is 10^5)
+            if ((num >= 10 && num <= 99) || (num >= 1000 && num <= 9999) || num == 100000) {
+                count++;
+            }
+        }
+        return count;
+    }
+}
