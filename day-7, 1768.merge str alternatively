@@ -1,0 +1,21 @@
+class Solution {
+    public String mergeAlternately(String word1, String word2) {
+        StringBuilder result = new StringBuilder();
+        int i = 0;
+        
+        // Loop as long as at least one string has remaining characters
+        while (i < word1.length() || i < word2.length()) {
+            // Append character from word1 if within bounds
+            if (i < word1.length()) {
+                result.append(word1.charAt(i));
+            }
+            // Append character from word2 if within bounds
+            if (i < word2.length()) {
+                result.append(word2.charAt(i));
+            }
+            i++;
+        }
+        
+        return result.toString();
+    }
+}
