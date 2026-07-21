@@ -1,0 +1,51 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    private List<Integer> sortedValues = new ArrayList<>();
+
+    public TreeNode balanceBST(TreeNode root) {
+        // Step 1: Perform in-order traversal to store sorted values
+        inOrderTraversal(root);
+        
+        // Step 2: Build and return a balanced BST from the sorted list
+        return buildBalancedBST(0, sortedValues.size() - 1);
+    }
+
+    private void inOrderTraversal(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        inOrderTraversal(node.left);
+        sortedValues.add(node.val);
+        inOrderTraversal(node.right);
+    }
+
+    private TreeNode buildBalancedBST(int left, int right) {
+        if (left > right) {
+            return null;
+        }
+
+        // Pick the middle element to ensure equal division
+        int mid = left + (right - left) / 2;
+        TreeNode node = new TreeNode(sortedValues.get(mid));
+
+        // Recursively build left and right subtrees
+        node.left = buildBalancedBST(left, mid - 1);
+        node.right = buildBalancedBST(mid + 1, right);
+
+        return node;
+    }
+}
