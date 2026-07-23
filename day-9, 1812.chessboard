@@ -1,0 +1,9 @@
+class Solution {
+    public boolean squareIsWhite(String coordinates) {
+        // Add character values directly
+        int sum = coordinates.charAt(0) + coordinates.charAt(1);
+        
+        // If the sum is odd, return true (white); otherwise false (black)
+        return sum % 2 != 0;
+    }
+}
