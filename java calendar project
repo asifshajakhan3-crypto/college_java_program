@@ -1,0 +1,47 @@
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.Scanner;
+
+public class MonthlyCalendar {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // 1. Gather user input
+        System.out.print("Enter Year (e.g., 2026): ");
+        int year = scanner.nextInt();
+        System.out.print("Enter Month (1-12): ");
+        int month = scanner.nextInt();
+
+        // 2. Get information about the chosen month
+        YearMonth yearMonth = YearMonth.of(year, month);
+        LocalDate firstOfMonth = yearMonth.atDay(1);
+        int totalDays = yearMonth.lengthOfMonth();
+        
+        // Get day of the week value for the 1st day (1 = Monday, ..., 7 = Sunday)
+        int dayOfWeekValue = firstOfMonth.getDayOfWeek().getValue();
+
+        // 3. Print the calendar headers
+        System.out.println("\n     " + yearMonth.getMonth() + " " + year);
+        System.out.println("Su  Mo  Tu  We  Th  Fr  Sa");
+
+        // 4. Print leading spaces for the first week grid
+        // If dayOfWeekValue is 7 (Sunday), it should start at position 0, else at dayOfWeekValue
+        int spaces = (dayOfWeekValue == 7) ? 0 : dayOfWeekValue;
+        for (int i = 0; i < spaces; i++) {
+            System.out.print("    ");
+        }
+
+        // 5. Print the days of the month
+        for (int day = 1; day <= totalDays; day++) {
+            System.out.printf("%2d  ", day);
+            spaces++;
+            
+            // Break line after Saturday (every 7 slots)
+            if (spaces % 7 == 0) {
+                System.out.println();
+            }
+        }
+        System.out.println(); // Final newline break
+        scanner.close();
+    }
+}
